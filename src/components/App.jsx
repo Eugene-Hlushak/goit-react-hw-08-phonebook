@@ -1,20 +1,18 @@
 import Contacts from 'pages/Contacts';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import SharedLayout from './SharedLayout/SharedLayout';
 
 export const App = () => {
   return (
     <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/login">About</Link>
-        <Link to="/contacts">Products</Link>
-      </nav>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/contacts" element={<Contacts />} />
+        </Route>
       </Routes>
     </div>
   );

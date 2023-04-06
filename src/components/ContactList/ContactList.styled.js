@@ -22,7 +22,7 @@ export const Contact = styled.p`
   margin-right: 10px;
 `;
 
-export const GetContactInfo = styled.button`
+export const ContactInfo = styled.p`
   width: 100%;
   height: 30px;
   margin-right: 15px;

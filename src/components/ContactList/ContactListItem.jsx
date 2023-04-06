@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { GoTrashcan } from 'react-icons/go';
-import {
-  deleteContact,
-  getContactInfo,
-} from 'redux/contacts/contactsOperations';
+import { deleteContact } from 'redux/contacts/contactsOperations';
 import {
   ContactItem,
   Contact,
-  GetContactInfo,
+  ContactInfo,
   DeleteBtn,
 } from './ContactList.styled';
 
@@ -20,13 +17,9 @@ export default function ContactListItem({
   return (
     <ContactItem>
       <Contact>
-        <GetContactInfo
-          onClick={() => {
-            dispatch(getContactInfo(id));
-          }}
-        >
+        <ContactInfo>
           <span>{name}</span>: <span>{phone}</span>
-        </GetContactInfo>
+        </ContactInfo>
         <DeleteBtn onClick={() => dispatch(deleteContact(id))}>
           <GoTrashcan size={20} color={'black'} />
         </DeleteBtn>

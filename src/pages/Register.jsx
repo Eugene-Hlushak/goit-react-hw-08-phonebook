@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom/dist';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerNewUser } from 'redux/users/usersOperations';
+import { selectUserIsLoggedin } from 'redux/users/usersSelectors';
 import {
   AddContactForm,
   FormInput,
@@ -11,8 +14,9 @@ import {
 
 export default function Register() {
   const dispatch = useDispatch();
+  const userLoggedIn = useSelector(selectUserIsLoggedin);
+  const navigate = useNavigate();
 
-  console.log('sdfasdfsaf');
   const formInitialValues = {
     name: '',
     email: '',
@@ -27,9 +31,10 @@ export default function Register() {
     password: string().min(8).required(),
   });
 
+  if (userLoggedIn) navigate('/contacts', { replace: true });
+
   return (
     <div>
-      <div>Register</div>
       <Formik
         initialValues={formInitialValues}
         validationSchema={validationSchema}
@@ -37,7 +42,7 @@ export default function Register() {
       >
         <AddContactForm>
           <FormLabel>
-            <LabelTitle>login</LabelTitle>
+            <LabelTitle>Login</LabelTitle>
             <FormInput type="text" name="name" />
             <ErrorMessage name="name" />
           </FormLabel>
@@ -53,7 +58,8 @@ export default function Register() {
             <ErrorMessage name="password" />
           </FormLabel>
 
-          <button type="submit">Add contact</button>
+          <button type="submit">Register</button>
+          <Link to="/login">Allready have an account? Login.</Link>
         </AddContactForm>
       </Formik>
     </div>

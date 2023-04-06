@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { showContactsByName, setStatusFilter } from 'redux/filter/filterSlice';
-import { selectCathegoryFilter } from 'redux/selectors';
+import { selectCathegoryFilter } from 'redux/filter/filterSelectors';
 import { filterByCathegory } from 'redux/constants';
 import {
   FilterLabel,

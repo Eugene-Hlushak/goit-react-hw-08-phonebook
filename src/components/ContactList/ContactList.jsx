@@ -1,7 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Puff } from 'react-loader-spinner';
 import ContactListItem from './ContactListItem';
-import { selectVisibleContacts, selectItemsIsLoading } from 'redux/selectors';
+import {
+  selectVisibleContacts,
+  selectItemsIsLoading,
+} from 'redux/contacts/contactsSelectors';
 import { LoaderContainer } from 'components/GlobalStyle';
 import { List } from './ContactList.styled';
 
