@@ -1,6 +1,6 @@
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { registerNewUser } from 'redux/users/usersOperations';
 import {
   AddContactForm,
@@ -11,24 +11,18 @@ import {
 
 export default function Register() {
   const dispatch = useDispatch();
-  // const contacts = useSelector(selectContacts);
 
+  console.log('sdfasdfsaf');
   const formInitialValues = {
-    login: '',
+    name: '',
     email: '',
     password: '',
   };
 
-  const signup = values => {
-    console.log(values);
-    // dispatch(registerNewUser(values));
-  };
+  const signup = values => dispatch(registerNewUser(values));
 
   const validationSchema = object({
-    login: string()
-      .min(3, 'Too short name')
-      .max(20, 'Too long name')
-      .required(),
+    name: string().min(3, 'Too short name').max(20, 'Too long name').required(),
     email: string().required(),
     password: string().min(8).required(),
   });
@@ -43,9 +37,9 @@ export default function Register() {
       >
         <AddContactForm>
           <FormLabel>
-            <LabelTitle>Login</LabelTitle>
-            <FormInput type="text" name="login" />
-            <ErrorMessage name="login" />
+            <LabelTitle>login</LabelTitle>
+            <FormInput type="text" name="name" />
+            <ErrorMessage name="name" />
           </FormLabel>
 
           <FormLabel>
