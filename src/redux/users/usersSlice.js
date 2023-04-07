@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registerNewUser, loginUser } from './usersOperations';
+import { registerNewUser, loginUser, logoutUser } from './usersOperations';
 
 const initialState = {
-  user: { name: '', email: '' },
-  token: '',
+  user: { name: null, email: null },
+  token: null,
   isLoggedIn: false,
 };
 
@@ -19,6 +19,11 @@ export const userSlice = createSlice({
   extraReducers: {
     [registerNewUser.fulfilled]: authSuccessState,
     [loginUser.fulfilled]: authSuccessState,
+    [logoutUser.fulfilled](state) {
+      state.user = { name: null, email: null };
+      state.isLoggedIn = false;
+      state.token = null;
+    },
   },
 });
 

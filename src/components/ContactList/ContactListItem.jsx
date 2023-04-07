@@ -9,9 +9,7 @@ import {
   DeleteBtn,
 } from './ContactList.styled';
 
-export default function ContactListItem({
-  contact: { name, phone, id, group },
-}) {
+export default function ContactListItem({ contact: { name, phone, id } }) {
   const dispatch = useDispatch();
 
   return (
