@@ -7,11 +7,7 @@ import {
   AddContactForm,
   FormInput,
   FormLabel,
-  CheckboxContainer,
   LabelTitle,
-  CheckboxLabel,
-  CheckboxLabelNoMarginRight,
-  Container,
 } from './ContactForm.styled';
 
 export default function ContactForm() {
