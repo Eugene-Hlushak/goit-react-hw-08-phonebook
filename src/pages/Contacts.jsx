@@ -18,14 +18,16 @@ import {
 export default function Contacts() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const userLoggenId = useSelector(selectUserIsLoggedin);
+  const userLoggedIn = useSelector(selectUserIsLoggedin);
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  if (!userLoggenId) navigate('/', { replace: true });
+  useEffect(() => {
+    if (!userLoggedIn) navigate('/', { replace: true });
+  }, [navigate, userLoggedIn]);
 
   return (
     <>

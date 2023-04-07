@@ -20,8 +20,7 @@ export default function ContactForm() {
 
   const formInitialValues = {
     name: '',
-    phone: '',
-    cathegory: [],
+    number: '',
   };
 
   const validationSchema = object({
@@ -29,7 +28,7 @@ export default function ContactForm() {
       .min(3, 'Too short name')
       .max(20, 'Too long name')
       .required('Required'),
-    phone: string().required('Required'),
+    number: string().required('Required'),
   });
 
   const saveNewContact = (values, { resetForm }) => {
@@ -37,7 +36,7 @@ export default function ContactForm() {
       contact => contact.name.toLowerCase() === values.name.toLowerCase()
     );
     const checkContactNumber = contacts.find(
-      contact => contact.phone === values.phone
+      contact => contact.number === values.number
     );
 
     if (checkContactName || checkContactNumber) {
@@ -45,7 +44,7 @@ export default function ContactForm() {
         alert(`${values.name} is already in contacts`);
         return;
       } else {
-        alert(`${values.phone} is already in contacts`);
+        alert(`${values.number} is already in contacts`);
         return;
       }
     }
@@ -68,32 +67,10 @@ export default function ContactForm() {
         </FormLabel>
 
         <FormLabel>
-          <LabelTitle>Phone</LabelTitle>
-          <FormInput type="tel" name="phone" />
-          <ErrorMessage name="phone" />
+          <LabelTitle>Number</LabelTitle>
+          <FormInput type="tel" name="number" />
+          <ErrorMessage name="number" />
         </FormLabel>
-
-        <CheckboxContainer>
-          <LabelTitle>Cathegory</LabelTitle>
-          <Container>
-            <CheckboxLabel>
-              <FormInput type="checkbox" name="cathegory" value="Friends" />
-              Friends
-            </CheckboxLabel>
-            <CheckboxLabelNoMarginRight>
-              <FormInput type="checkbox" name="cathegory" value="Family" />
-              Family
-            </CheckboxLabelNoMarginRight>
-            <CheckboxLabel>
-              <FormInput type="checkbox" name="cathegory" value="Vip" />
-              Vip
-            </CheckboxLabel>
-            <CheckboxLabelNoMarginRight>
-              <FormInput type="checkbox" name="cathegory" value="Work" />
-              Work
-            </CheckboxLabelNoMarginRight>
-          </Container>
-        </CheckboxContainer>
         <button type="submit">Add contact</button>
       </AddContactForm>
     </Formik>

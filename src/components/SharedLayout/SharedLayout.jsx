@@ -25,9 +25,14 @@ const SharedLayout = () => {
           </div>
         ) : (
           <Navigation>
-            <Link to="/">Login</Link>
-            <Link to="/register">Register</Link>
-            {/* <Link to="/contacts">Contacts</Link> */}
+            {!userLoggedIn ? (
+              <>
+                <Link to="/">Login</Link>
+                <Link to="/register">Register</Link>
+              </>
+            ) : (
+              <Link to="/contacts">Contacts</Link>
+            )}
           </Navigation>
         )}
 

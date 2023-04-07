@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom/dist';
+import { useEffect } from 'react';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,9 +23,11 @@ export default function Login() {
     password: '',
   };
 
-  const signup = values => dispatch(loginUser(values));
+  useEffect(() => {
+    if (userLoggedIn) navigate('/contacts', { replace: true });
+  }, [navigate, userLoggedIn]);
 
-  if (userLoggedIn) navigate('/contacts', { replace: true });
+  const signup = values => dispatch(loginUser(values));
 
   const validationSchema = object({
     email: string().required(),
@@ -32,28 +35,26 @@ export default function Login() {
   });
 
   return (
-    <div>
-      <Formik
-        initialValues={formInitialValues}
-        validationSchema={validationSchema}
-        onSubmit={signup}
-      >
-        <AddContactForm>
-          <FormLabel>
-            <LabelTitle>Email</LabelTitle>
-            <FormInput type="email" name="email" />
-            <ErrorMessage name="email" />
-          </FormLabel>
-          <FormLabel>
-            <LabelTitle>Password</LabelTitle>
-            <FormInput type="password" name="password" />
-            <ErrorMessage name="password" />
-          </FormLabel>
+    <Formik
+      initialValues={formInitialValues}
+      validationSchema={validationSchema}
+      onSubmit={signup}
+    >
+      <AddContactForm>
+        <FormLabel>
+          <LabelTitle>Email</LabelTitle>
+          <FormInput type="email" name="email" />
+          <ErrorMessage name="email" />
+        </FormLabel>
+        <FormLabel>
+          <LabelTitle>Password</LabelTitle>
+          <FormInput type="password" name="password" />
+          <ErrorMessage name="password" />
+        </FormLabel>
 
-          <button type="submit">Login</button>
-          <Link to="/">Haven't account? Register.</Link>
-        </AddContactForm>
-      </Formik>
-    </div>
+        <button type="submit">Login</button>
+        <Link to="/">Haven't account? Register.</Link>
+      </AddContactForm>
+    </Formik>
   );
 }
