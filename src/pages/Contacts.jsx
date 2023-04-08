@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom/dist';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
-import { refreshUser } from 'redux/auth/authOperations';
+
 import ContactForm from '../components/ContactForm/ContactForm';
 import Filter from '../components/Filter/Filter';
 import ContactList from '../components/ContactList/ContactList';
@@ -22,9 +22,8 @@ export default function Contacts() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(refreshUser());
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    if (userLoggedIn) dispatch(fetchContacts());
+  }, [dispatch, userLoggedIn]);
 
   useEffect(() => {
     if (!userLoggedIn) navigate('/', { replace: true });

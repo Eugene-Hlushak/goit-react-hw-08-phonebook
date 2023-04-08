@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom/dist';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerNewUser } from 'redux/auth/authOperations';
+import { userRegister } from 'redux/auth/authOperations';
 import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
 import {
   AddContactForm,
@@ -23,7 +23,7 @@ export default function Register() {
     password: '',
   };
 
-  const signup = values => dispatch(registerNewUser(values));
+  const signup = values => dispatch(userRegister(values));
 
   const validationSchema = object({
     name: string().min(3, 'Too short name').max(20, 'Too long name').required(),
@@ -42,7 +42,7 @@ export default function Register() {
       >
         <AddContactForm>
           <FormLabel>
-            <LabelTitle>Login</LabelTitle>
+            <LabelTitle>Name</LabelTitle>
             <FormInput type="text" name="name" />
             <ErrorMessage name="name" />
           </FormLabel>
@@ -59,7 +59,7 @@ export default function Register() {
           </FormLabel>
 
           <button type="submit">Register</button>
-          <Link to="/login">Allready have an account? Login.</Link>
+          <Link to="/">Allready have an account? Login.</Link>
         </AddContactForm>
       </Formik>
     </div>

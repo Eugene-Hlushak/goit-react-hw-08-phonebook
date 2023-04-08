@@ -13,7 +13,7 @@ const token = {
   },
 };
 
-export const registerNewUser = createAsyncThunk(
+export const userRegister = createAsyncThunk(
   'auth/signup',
   async (credentials, thunkAPI) => {
     try {
@@ -26,7 +26,7 @@ export const registerNewUser = createAsyncThunk(
   }
 );
 
-export const loginUser = createAsyncThunk(
+export const userLogin = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
@@ -40,21 +40,21 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk('auth/logout', async () => {
+export const userLogout = createAsyncThunk('auth/logout', async () => {
   try {
     await axios.post('/users/logout');
     token.unset();
   } catch (err) {}
 });
 
-export const refreshUser = createAsyncThunk(
+export const userRefresh = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
     if (!persistedToken) {
-      return;
+      return thunkAPI.rejectWithValue();
     } else {
       token.set(persistedToken);
       try {

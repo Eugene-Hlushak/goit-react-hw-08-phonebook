@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from 'redux/auth/authOperations';
+import { userLogin } from 'redux/auth/authOperations';
 import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
 import {
   AddContactForm,
@@ -27,7 +27,7 @@ export default function Login() {
     if (userLoggedIn) navigate('/contacts', { replace: true });
   }, [navigate, userLoggedIn]);
 
-  const signup = values => dispatch(loginUser(values));
+  const signup = values => dispatch(userLogin(values));
 
   const validationSchema = object({
     email: string().required(),
@@ -53,7 +53,7 @@ export default function Login() {
         </FormLabel>
 
         <button type="submit">Login</button>
-        <Link to="/">Haven't account? Register.</Link>
+        <Link to="/register">Haven't account? Register.</Link>
       </AddContactForm>
     </Formik>
   );

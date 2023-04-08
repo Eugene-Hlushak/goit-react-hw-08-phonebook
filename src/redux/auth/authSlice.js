@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registerNewUser, loginUser, logoutUser } from './authOperations';
+import {
+  userRegister,
+  userLogin,
+  userLogout,
+  userRefresh,
+} from './authOperations';
 
 const initialState = {
   user: { name: null, email: null },
@@ -13,13 +18,23 @@ const authSuccessState = (state, { payload }) => {
   state.isLoggedIn = true;
 };
 
-export const userSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
   extraReducers: {
-    [registerNewUser.fulfilled]: authSuccessState,
-    [loginUser.fulfilled]: authSuccessState,
-    [logoutUser.fulfilled](state) {
+    [userRegister.fulfilled]: authSuccessState,
+    [userLogin.fulfilled]: authSuccessState,
+    [userRefresh.pending](state) {
+      state.isLoggedIn = true;
+    },
+    [userRefresh.fulfilled](state, { payload }) {
+      state.user = payload;
+      state.isLoggedIn = true;
+    },
+    [userRefresh.pending](state) {
+      state.isLoggedIn = false;
+    },
+    [userLogout.fulfilled](state) {
       state.user = { name: null, email: null };
       state.isLoggedIn = false;
       state.token = null;
@@ -27,5 +42,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { authInProgres, authSuccess, authRejected } = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const { authInProgres, authSuccess, authRejected } = authSlice.actions;
+export const authReducer = authSlice.reducer;

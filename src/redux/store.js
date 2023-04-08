@@ -3,7 +3,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { contactsReducer } from './contacts/contactsFetchSlice';
 import { filterReducer } from './filter/filterSlice';
-import { userReducer } from './auth/authSlice';
+import { authReducer } from './auth/authSlice';
 import {
   persistStore,
   persistReducer,
@@ -15,22 +15,22 @@ import {
   REGISTER,
 } from 'redux-persist';
 
+const persistConfig = {
+  key: 'hw-08-phonebook',
+  storage,
+  whitelist: ['token'],
+};
+
 const rootReducer = combineReducers({
-  auth: userReducer,
+  auth: persistReducer(persistConfig, authReducer),
   contacts: contactsReducer,
   filter: filterReducer,
 });
 
-const persistConfig = {
-  key: 'hw-08-phonebook',
-  storage,
-  whitelist: ['auth'],
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({
       serializableCheck: {
