@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from 'redux/users/usersOperations';
-import { selectUserIsLoggedin } from 'redux/users/usersSelectors';
+import { loginUser } from 'redux/auth/authOperations';
+import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
 import {
   AddContactForm,
   FormInput,

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registerNewUser, loginUser, logoutUser } from './usersOperations';
+import { registerNewUser, loginUser, logoutUser } from './authOperations';
 
 const initialState = {
   user: { name: null, email: null },
@@ -14,7 +14,7 @@ const authSuccessState = (state, { payload }) => {
 };
 
 export const userSlice = createSlice({
-  name: 'users',
+  name: 'auth',
   initialState: initialState,
   extraReducers: {
     [registerNewUser.fulfilled]: authSuccessState,

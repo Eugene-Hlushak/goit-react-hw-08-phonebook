@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom/dist';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser } from 'redux/users/usersSelectors';
-import { logoutUser } from 'redux/users/usersOperations';
+import { selectUser } from 'redux/auth/authSelectors';
+import { logoutUser } from 'redux/auth/authOperations';
 import { Navigation, Link, Header, Container } from './SharedLayout.styled';
-import { selectUserIsLoggedin } from 'redux/users/usersSelectors';
+import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
@@ -12,30 +12,27 @@ const SharedLayout = () => {
   return (
     <Container>
       <Header>
-        {userLoggedIn ? (
-          <div>
-            <p>Welcome {user.name}</p>
-            <button
-              onClick={() => {
-                dispatch(logoutUser());
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        ) : (
-          <Navigation>
-            {!userLoggedIn ? (
-              <>
-                <Link to="/">Login</Link>
-                <Link to="/register">Register</Link>
-              </>
-            ) : (
+        <h1>Phonebook</h1>
+        <Navigation>
+          {!userLoggedIn ? (
+            <>
+              <Link to="/">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          ) : (
+            <div>
               <Link to="/contacts">Contacts</Link>
-            )}
-          </Navigation>
-        )}
-
+              <p>Welcome {user.name}</p>
+              <button
+                onClick={() => {
+                  dispatch(logoutUser());
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </Navigation>
         <Outlet />
         {/* <Suspense fallback={<div>Loading page...</div>}>
           <Outlet /> */}

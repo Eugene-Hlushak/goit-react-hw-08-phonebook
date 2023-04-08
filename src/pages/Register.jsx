@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom/dist';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerNewUser } from 'redux/users/usersOperations';
-import { selectUserIsLoggedin } from 'redux/users/usersSelectors';
+import { registerNewUser } from 'redux/auth/authOperations';
+import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
 import {
   AddContactForm,
   FormInput,

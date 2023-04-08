@@ -23,7 +23,6 @@ export const contactsFetchSlice = createSlice({
     [fetchContacts.pending]: pendingState,
     [fetchContacts.fulfilled](state, { payload }) {
       state.itemsIsLoading = false;
-      state.contact = null;
       state.error = null;
       state.items = payload;
     },
@@ -33,7 +32,6 @@ export const contactsFetchSlice = createSlice({
     [addContact.fulfilled](state, { payload }) {
       state.itemsIsLoading = false;
       state.error = null;
-      state.contact = null;
       state.items = [...state.items, payload];
     },
     [addContact.rejected]: errorState,

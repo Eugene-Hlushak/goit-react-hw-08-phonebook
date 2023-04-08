@@ -3,7 +3,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { contactsReducer } from './contacts/contactsFetchSlice';
 import { filterReducer } from './filter/filterSlice';
-import { userReducer } from './users/usersSlice';
+import { userReducer } from './auth/authSlice';
 import {
   persistStore,
   persistReducer,
@@ -16,7 +16,7 @@ import {
 } from 'redux-persist';
 
 const rootReducer = combineReducers({
-  users: userReducer,
+  auth: userReducer,
   contacts: contactsReducer,
   filter: filterReducer,
 });
@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'hw-08-phonebook',
   storage,
-  whitelist: ['users'],
+  whitelist: ['auth'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
