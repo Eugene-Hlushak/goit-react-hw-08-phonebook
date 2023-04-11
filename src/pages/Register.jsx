@@ -1,67 +1,80 @@
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom/dist';
-import { Formik, ErrorMessage } from 'formik';
-import { object, string } from 'yup';
+import { Navigate } from 'react-router-dom/dist';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userRegister } from 'redux/auth/authOperations';
 import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
 import {
-  AddContactForm,
-  FormInput,
-  FormLabel,
-  LabelTitle,
-} from '../components/ContactForm/ContactForm.styled';
+  Box,
+  ThemeProvider,
+  createTheme,
+  TextField,
+  Button,
+} from '@mui/material';
+
+const theme = createTheme({
+  palette: {
+    background: {
+      contactList: '#c76161',
+    },
+  },
+  text: {
+    primary: '#10100f54',
+    secondary: '#343434d0',
+  },
+});
 
 export default function Register() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const dispatch = useDispatch();
   const userLoggedIn = useSelector(selectUserIsLoggedin);
-  const navigate = useNavigate();
 
-  const formInitialValues = {
-    name: '',
-    email: '',
-    password: '',
+  const signUp = e => {
+    e.preventDefault();
+    dispatch(userRegister({ name, email, password }));
   };
 
-  const signup = values => dispatch(userRegister(values));
-
-  const validationSchema = object({
-    name: string().min(3, 'Too short name').max(20, 'Too long name').required(),
-    email: string().required(),
-    password: string().min(8).required(),
-  });
-
-  if (userLoggedIn) navigate('/contacts', { replace: true });
+  if (userLoggedIn) {
+    return <Navigate to="/contacts" replace />;
+  }
 
   return (
-    <div>
-      <Formik
-        initialValues={formInitialValues}
-        validationSchema={validationSchema}
-        onSubmit={signup}
-      >
-        <AddContactForm>
-          <FormLabel>
-            <LabelTitle>Name</LabelTitle>
-            <FormInput type="text" name="name" />
-            <ErrorMessage name="name" />
-          </FormLabel>
+    <ThemeProvider theme={theme}>
+      <Box component={'form'} onSubmit={signUp}>
+        <TextField
+          label="Name"
+          type="text"
+          variant="outlined"
+          name="name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <TextField
+          label="Email"
+          type="email"
+          variant="outlined"
+          name="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
 
-          <FormLabel>
-            <LabelTitle>Email</LabelTitle>
-            <FormInput type="email" name="email" />
-            <ErrorMessage name="email" />
-          </FormLabel>
-          <FormLabel>
-            <LabelTitle>Password</LabelTitle>
-            <FormInput type="password" name="password" />
-            <ErrorMessage name="password" />
-          </FormLabel>
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          name="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <Button variant="outlined" type="submit">
+          Submit
+        </Button>
 
-          <button type="submit">Register</button>
-          <Link to="/">Allready have an account? Login.</Link>
-        </AddContactForm>
-      </Formik>
-    </div>
+        <Link to="/">Already have an accaunt? Login.</Link>
+      </Box>
+    </ThemeProvider>
   );
 }

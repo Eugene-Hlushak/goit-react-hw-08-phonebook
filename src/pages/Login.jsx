@@ -1,60 +1,72 @@
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom/dist';
-import { useEffect } from 'react';
-import { Formik, ErrorMessage } from 'formik';
-import { object, string } from 'yup';
+import { Navigate } from 'react-router-dom/dist';
+import { useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from 'redux/auth/authOperations';
 import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
 import {
-  AddContactForm,
-  FormInput,
-  FormLabel,
-  LabelTitle,
-} from '../components/ContactForm/ContactForm.styled';
+  Box,
+  ThemeProvider,
+  createTheme,
+  TextField,
+  Button,
+} from '@mui/material';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const dispatch = useDispatch();
   const userLoggedIn = useSelector(selectUserIsLoggedin);
-  const navigate = useNavigate();
 
-  const formInitialValues = {
-    email: '',
-    password: '',
-  };
-
-  useEffect(() => {
-    if (userLoggedIn) navigate('/contacts', { replace: true });
-  }, [navigate, userLoggedIn]);
-
-  const signup = values => dispatch(userLogin(values));
-
-  const validationSchema = object({
-    email: string().required(),
-    password: string().min(8).required(),
+  const theme = createTheme({
+    palette: {
+      background: {
+        contactList: '#c76161',
+      },
+    },
+    text: {
+      primary: '#10100f54',
+      secondary: '#343434d0',
+    },
   });
 
-  return (
-    <Formik
-      initialValues={formInitialValues}
-      validationSchema={validationSchema}
-      onSubmit={signup}
-    >
-      <AddContactForm>
-        <FormLabel>
-          <LabelTitle>Email</LabelTitle>
-          <FormInput type="email" name="email" />
-          <ErrorMessage name="email" />
-        </FormLabel>
-        <FormLabel>
-          <LabelTitle>Password</LabelTitle>
-          <FormInput type="password" name="password" />
-          <ErrorMessage name="password" />
-        </FormLabel>
+  if (userLoggedIn) {
+    return <Navigate to="/contacts" replace />;
+  }
 
-        <button type="submit">Login</button>
-        <Link to="/register">Haven't account? Register.</Link>
-      </AddContactForm>
-    </Formik>
+  const signIn = e => {
+    e.preventDefault();
+    dispatch(userLogin({ email, password }));
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Box component={'form'} onSubmit={signIn}>
+        <TextField
+          label="Email"
+          type="email"
+          variant="outlined"
+          name="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          name="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <Button variant="outlined" type="submit">
+          Submit
+        </Button>
+
+        <Link to="/register">Haven't an accaunt yet? Register.</Link>
+      </Box>
+    </ThemeProvider>
   );
 }
