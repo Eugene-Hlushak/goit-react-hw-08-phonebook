@@ -10,6 +10,7 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
+  isRefresh: false,
 };
 
 const authSuccessState = (state, { payload }) => {
@@ -25,14 +26,15 @@ export const authSlice = createSlice({
     [userRegister.fulfilled]: authSuccessState,
     [userLogin.fulfilled]: authSuccessState,
     [userRefresh.pending](state) {
-      state.isLoggedIn = true;
+      state.isRefresh = true;
     },
     [userRefresh.fulfilled](state, { payload }) {
       state.user = payload;
       state.isLoggedIn = true;
+      state.isRefresh = false;
     },
-    [userRefresh.pending](state) {
-      state.isLoggedIn = false;
+    [userRefresh.rejected](state) {
+      state.isRefresh = false;
     },
     [userLogout.fulfilled](state) {
       state.user = { name: null, email: null };

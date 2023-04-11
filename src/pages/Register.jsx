@@ -43,7 +43,17 @@ export default function Register() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box component={'form'} onSubmit={signUp}>
+      <Box
+        component={'form'}
+        onSubmit={signUp}
+        sx={{
+          display: 'flex',
+          p: '20px',
+          flexDirection: 'column',
+          alignItems: 'center',
+          bgcolor: '#dee6bbc5',
+        }}
+      >
         <TextField
           label="Name"
           type="text"
@@ -51,6 +61,7 @@ export default function Register() {
           name="name"
           value={name}
           onChange={e => setName(e.target.value)}
+          sx={{ mb: '10px', width: '500px' }}
         />
         <TextField
           label="Email"
@@ -68,12 +79,22 @@ export default function Register() {
           name="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          sx={{ mb: '10px', width: '500px' }}
         />
-        <Button variant="outlined" type="submit">
+        <Button
+          variant="outlined"
+          type="submit"
+          sx={{
+            bgcolor: '#3fb400',
+            color: theme.text.paper,
+            mb: '10px',
+            width: '500px',
+          }}
+        >
           Submit
         </Button>
 
-        <Link to="/">Already have an accaunt? Login.</Link>
+        <Link to="/">Already have an account? Login.</Link>
       </Box>
     </ThemeProvider>
   );

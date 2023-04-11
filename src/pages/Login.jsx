@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Navigate } from 'react-router-dom/dist';
 import { useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from 'redux/auth/authOperations';
 import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
@@ -11,6 +10,7 @@ import {
   createTheme,
   TextField,
   Button,
+  Stack,
 } from '@mui/material';
 
 export default function Login() {
@@ -23,10 +23,11 @@ export default function Login() {
   const theme = createTheme({
     palette: {
       background: {
-        contactList: '#c76161',
+        btn: '#126c00af',
       },
     },
     text: {
+      paper: '#fff',
       primary: '#10100f54',
       secondary: '#343434d0',
     },
@@ -43,7 +44,17 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box component={'form'} onSubmit={signIn}>
+      <Box
+        component={'form'}
+        onSubmit={signIn}
+        sx={{
+          display: 'flex',
+          p: '20px',
+          flexDirection: 'column',
+          alignItems: 'center',
+          bgcolor: '#dee6bbc5',
+        }}
+      >
         <TextField
           label="Email"
           type="email"
@@ -51,6 +62,7 @@ export default function Login() {
           name="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          sx={{ mb: '10px', width: '500px' }}
         />
 
         <TextField
@@ -60,12 +72,22 @@ export default function Login() {
           name="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          sx={{ mb: '10px', width: '500px' }}
         />
-        <Button variant="outlined" type="submit">
+        <Button
+          variant="outlined"
+          type="submit"
+          sx={{
+            bgcolor: '#3fb400',
+            color: theme.text.paper,
+            mb: '10px',
+            width: '500px',
+          }}
+        >
           Submit
         </Button>
 
-        <Link to="/register">Haven't an accaunt yet? Register.</Link>
+        <Link to="/register">Haven't an account yet? Register.</Link>
       </Box>
     </ThemeProvider>
   );
