@@ -1,5 +1,13 @@
 import { styled } from '@mui/material/styles';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Box } from '@mui/material';
+
+export const Container = styled('div')({
+  height: '538px',
+  display: 'flex',
+  justifyContent: 'center',
+  padding: '20px',
+  backgroundColor: '#dee6bbc5',
+});
 
 export const CommonButton = styled(Button)({
   width: '500px',
@@ -31,4 +39,11 @@ export const CommonInput = styled(TextField)({
       borderColor: 'green',
     },
   },
+});
+
+export const CommonForm = styled(Box)({
+  display: 'flex',
+  p: '20px',
+  flexDirection: 'column',
+  alignItems: 'center',
 });

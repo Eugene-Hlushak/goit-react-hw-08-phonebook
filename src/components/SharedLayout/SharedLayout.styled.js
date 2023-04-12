@@ -1,27 +1,36 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
+import { Button, AppBar } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
-export const Header = styled.header`
-  padding-top: 10px;
-  padding-bottom: 10px;
-`;
+export const Link = styled(NavLink)({
+  textDecoration: 'none',
+  fontSize: '20px',
+  fontWeight: 500,
+  color: 'black',
 
-export const Container = styled.div`
-  width: 100%;
-`;
-export const Navigation = styled.nav`
-  padding: 15px;
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  box-shadow: 3px 3px 3px 3px lightgray;
-`;
+  '&.active': {
+    color: '#faa41bf8',
+  },
+});
 
-export const Link = styled(NavLink)`
-  text-decoration: none;
-  color: black;
+export const AppHeader = styled(AppBar)({
+  backgroundColor: '#3fb400',
+});
 
-  &.active {
-    color: tomato;
-  }
-`;
+export const LinkBox = styled('div')({
+  display: 'flex',
+
+  alignItems: 'center',
+});
+
+export const User = styled('p')({
+  marginRight: '10px',
+});
+
+export const LogoutBtn = styled(Button)({
+  backgroundColor: '#faa41bf8',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#7c8848',
+  },
+});

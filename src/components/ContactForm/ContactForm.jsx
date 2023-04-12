@@ -1,74 +1,73 @@
-import { Formik, ErrorMessage } from 'formik';
-import { object, string } from 'yup';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/contactsSelectors';
 import { addContact } from 'redux/contacts/contactsOperations';
-import {
-  AddContactForm,
-  FormInput,
-  FormLabel,
-  LabelTitle,
-} from './ContactForm.styled';
+import { CommonButton, CommonInput } from './ContactForm.styled';
+import { Box } from '@mui/material';
 
 export default function ContactForm() {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
 
-  const formInitialValues = {
-    name: '',
-    number: '',
-  };
-
-  const validationSchema = object({
-    name: string()
-      .min(3, 'Too short name')
-      .max(20, 'Too long name')
-      .required('Required'),
-    number: string().required('Required'),
-  });
-
-  const saveNewContact = (values, { resetForm }) => {
+  const saveNewContact = e => {
+    e.preventDefault();
     const checkContactName = contacts.find(
-      contact => contact.name.toLowerCase() === values.name.toLowerCase()
+      contact => contact.name.toLowerCase() === name.toLowerCase()
     );
     const checkContactNumber = contacts.find(
-      contact => contact.number === values.number
+      contact => contact.number === number
     );
 
     if (checkContactName || checkContactNumber) {
       if (checkContactName) {
-        alert(`${values.name} is already in contacts`);
+        alert(`${name} is already in contacts`);
         return;
       } else {
-        alert(`${values.number} is already in contacts`);
+        alert(`${number} is already in contacts`);
         return;
       }
     }
 
-    dispatch(addContact(values));
-    resetForm();
+    dispatch(addContact({ name, number }));
+    setName('');
+    setNumber('');
   };
 
   return (
-    <Formik
-      initialValues={formInitialValues}
-      validationSchema={validationSchema}
+    <Box
+      component={'form'}
       onSubmit={saveNewContact}
+      autoComplete="off"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
     >
-      <AddContactForm>
-        <FormLabel>
-          <LabelTitle>Name</LabelTitle>
-          <FormInput type="text" name="name" />
-          <ErrorMessage name="name" />
-        </FormLabel>
+      <CommonInput
+        required
+        label="Name"
+        type="text"
+        variant="outlined"
+        name="name"
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
 
-        <FormLabel>
-          <LabelTitle>Number</LabelTitle>
-          <FormInput type="tel" name="number" />
-          <ErrorMessage name="number" />
-        </FormLabel>
-        <button type="submit">Add contact</button>
-      </AddContactForm>
-    </Formik>
+      <CommonInput
+        required
+        label="Number"
+        type="tel"
+        pattern="[0-9]"
+        variant="outlined"
+        name="number"
+        value={number}
+        onChange={e => setNumber(e.target.value)}
+      />
+      <CommonButton variant="outlined" type="submit">
+        Add contact
+      </CommonButton>
+    </Box>
   );
 }

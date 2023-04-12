@@ -1,43 +1,62 @@
 import { Outlet } from 'react-router-dom/dist';
+import { Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { userLogout } from 'redux/auth/authOperations';
-import { Navigation, Link, Header, Container } from './SharedLayout.styled';
+import {
+  Link,
+  LinkBox,
+  LogoutBtn,
+  AppHeader,
+  User,
+} from './SharedLayout.styled';
 import { selectUserIsLoggedin, selectUser } from 'redux/auth/authSelectors';
+import { Box, Toolbar, Typography } from '@mui/material';
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userLoggedIn = useSelector(selectUserIsLoggedin);
+
   return (
-    <Container>
-      <Header>
-        <h1>Phonebook</h1>
-        <Navigation>
-          {!userLoggedIn ? (
-            <>
-              <Link to="/">Login</Link>
-              <Link to="/register">Register</Link>
-            </>
-          ) : (
-            <div>
-              <Link to="/contacts">Contacts</Link>
-              {user.name && <p>Welcome {user.name}</p>}
-              <button
-                onClick={() => {
-                  dispatch(userLogout());
-                }}
-              >
-                Logout
-              </button>
-            </div>
-          )}
-        </Navigation>
+    <>
+      {/* #faa41bf8 #7c8848 #a5b400*/}
+      <AppHeader position="static">
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Typography variant="h6" noWrap component="div">
+            Phonebook
+          </Typography>
+          <Box>
+            {!userLoggedIn ? (
+              <LinkBox>
+                <Link to="/" sx={{ mr: '10px' }}>
+                  Login
+                </Link>
+                <Link to="/register">Register</Link>
+              </LinkBox>
+            ) : (
+              <LinkBox>
+                <Link to="/contacts" sx={{ mr: '10px' }}>
+                  Contacts
+                </Link>
+                {user.name && <User>Welcome, {user.name}</User>}
+                <LogoutBtn
+                  variant="outlined"
+                  type="submit"
+                  onClick={() => {
+                    dispatch(userLogout());
+                  }}
+                >
+                  Logout
+                </LogoutBtn>
+              </LinkBox>
+            )}
+          </Box>
+        </Toolbar>
+      </AppHeader>
+      <Suspense fallback={<div>Loading page...</div>}>
         <Outlet />
-        {/* <Suspense fallback={<div>Loading page...</div>}>
-          <Outlet /> */}
-        {/* </Suspense> */}
-      </Header>
-    </Container>
+      </Suspense>
+    </>
   );
 };
 export default SharedLayout;

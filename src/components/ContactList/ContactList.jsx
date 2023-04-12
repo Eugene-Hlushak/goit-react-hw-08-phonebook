@@ -6,14 +6,14 @@ import {
   selectItemsIsLoading,
 } from 'redux/contacts/contactsSelectors';
 import { LoaderContainer } from 'components/GlobalStyle';
-import { List } from './ContactList.styled';
+import { ListContainer } from './ContactList.styled';
 
 export default function ContactList() {
   const itemsIsLoading = useSelector(selectItemsIsLoading);
   const visibleContacts = useSelector(selectVisibleContacts);
 
   return (
-    <List>
+    <ListContainer>
       {itemsIsLoading ? (
         <LoaderContainer>
           <Puff
@@ -32,6 +32,6 @@ export default function ContactList() {
           <ContactListItem contact={contact} key={contact.id} />
         ))
       )}
-    </List>
+    </ListContainer>
   );
 }

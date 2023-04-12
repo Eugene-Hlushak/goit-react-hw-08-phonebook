@@ -4,25 +4,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userRegister } from 'redux/auth/authOperations';
 import { selectUserIsLoggedin } from 'redux/auth/authSelectors';
-import {
-  Box,
-  ThemeProvider,
-  createTheme,
-  TextField,
-  Button,
-} from '@mui/material';
-
-const theme = createTheme({
-  palette: {
-    background: {
-      contactList: '#c76161',
-    },
-  },
-  text: {
-    primary: '#10100f54',
-    secondary: '#343434d0',
-  },
-});
+import { Container, CommonButton, CommonForm } from './Pages.styled';
+import { TextField } from '@mui/material';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -42,19 +25,10 @@ export default function Register() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        component={'form'}
-        onSubmit={signUp}
-        sx={{
-          display: 'flex',
-          p: '20px',
-          flexDirection: 'column',
-          alignItems: 'center',
-          bgcolor: '#dee6bbc5',
-        }}
-      >
+    <Container>
+      <CommonForm component={'form'} autoComplete="off" onSubmit={signUp}>
         <TextField
+          required
           label="Name"
           type="text"
           variant="outlined"
@@ -64,15 +38,18 @@ export default function Register() {
           sx={{ mb: '10px', width: '500px' }}
         />
         <TextField
+          required
           label="Email"
           type="email"
           variant="outlined"
           name="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          sx={{ mb: '10px', width: '500px' }}
         />
 
         <TextField
+          required
           label="Password"
           type="password"
           variant="outlined"
@@ -81,21 +58,12 @@ export default function Register() {
           onChange={e => setPassword(e.target.value)}
           sx={{ mb: '10px', width: '500px' }}
         />
-        <Button
-          variant="outlined"
-          type="submit"
-          sx={{
-            bgcolor: '#3fb400',
-            color: theme.text.paper,
-            mb: '10px',
-            width: '500px',
-          }}
-        >
-          Submit
-        </Button>
+        <CommonButton variant="outlined" type="submit">
+          Register
+        </CommonButton>
 
         <Link to="/">Already have an account? Login.</Link>
-      </Box>
-    </ThemeProvider>
+      </CommonForm>
+    </Container>
   );
 }

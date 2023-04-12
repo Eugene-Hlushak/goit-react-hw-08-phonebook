@@ -1,34 +1,25 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
+import { TextField } from '@mui/material';
 
-export const FilterLabel = styled.label`
-  display: block;
-  margin-bottom: 15px;
-`;
-export const FilterInput = styled.input`
-  display: block;
-  margin-top: 5px;
-`;
+export const CommonInput = styled(TextField)({
+  marginBottom: '10px',
+  width: '300px',
 
-export const BtnContainer = styled.div`
-  padding: 0 5px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-`;
+  '& label.Mui-focused': {
+    color: 'green',
+  },
 
-export const BtnFilter = styled.button`
-  border: 1px solid tomato;
-  border-radius: 4px;
-  background-color: ${props => (props.selected ? `tomato` : `lightgray`)};
-  &:hover,
-  &:focus {
-    background-color: tomato;
-  }
-  &:active {
-    background-color: violet;
-  }
-`;
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'green',
+    },
 
-export const BtnFilterMargin = styled(BtnFilter)`
-  margin-right: 10px;
-`;
+    '&:hover fieldset': {
+      borderColor: '#fa531bf8',
+    },
+
+    '&.Mui-focused fieldset': {
+      borderColor: 'green',
+    },
+  },
+});
