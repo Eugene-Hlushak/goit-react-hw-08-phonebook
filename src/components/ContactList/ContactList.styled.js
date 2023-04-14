@@ -1,19 +1,19 @@
-import { ListItem, Stack } from '@mui/material';
 import styled from '@emotion/styled';
 
-export const ListContainer = styled(Stack)({
+export const ListContainer = styled('ul')({
   width: '400px',
-  height: '398px',
+  height: '515px',
   padding: '10px',
   border: '1px solid black',
   borderRadius: '4px',
   overflowY: 'scroll',
 });
 
-export const ContactItem = styled(ListItem)({
+export const ContactItem = styled('li')({
   width: '100%',
   marginBottom: '10px',
-  backgroundColor: '#ffffff',
+  padding: '10px',
+  backgroundColor: '#dee6bbc5',
   borderRadius: '8px',
 });
 
@@ -21,7 +21,6 @@ export const Contact = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginRight: '50px',
 });
 
 export const DeleteBtn = styled('button')({

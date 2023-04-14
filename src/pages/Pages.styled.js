@@ -2,11 +2,9 @@ import { styled } from '@mui/material/styles';
 import { Button, TextField, Box } from '@mui/material';
 
 export const Container = styled('div')({
-  height: '538px',
+  // height: '100%',
   display: 'flex',
   justifyContent: 'center',
-  padding: '20px',
-  backgroundColor: '#dee6bbc5',
 });
 
 export const CommonButton = styled(Button)({
