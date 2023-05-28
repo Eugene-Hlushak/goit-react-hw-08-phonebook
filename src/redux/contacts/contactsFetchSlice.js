@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './contactsOperations';
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  editContact,
+} from './contactsOperations';
 
 const initialState = {
   items: [],
@@ -43,6 +48,17 @@ export const contactsFetchSlice = createSlice({
       state.items = [...state.items.filter(item => item.id !== payload.id)];
     },
     [deleteContact.rejected]: errorState,
+    [editContact.pending]: pendingState,
+    [editContact.fulfilled](state, { payload }) {
+      state.itemsIsLoading = false;
+      state.error = null;
+      state.items = [
+        ...state.items.map(item =>
+          item.id === payload.id ? { ...item, ...payload } : item
+        ),
+      ];
+    },
+    [editContact.rejected]: errorState,
   },
 });
 
